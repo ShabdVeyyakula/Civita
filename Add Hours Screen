@@ -1,0 +1,284 @@
+import 'package:flutter/material.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
+
+void main() => runApp(EnrollmentScreen());
+
+class EnrollmentScreen extends StatefulWidget {
+  @override
+  EnrollmentScreenState createState() => EnrollmentScreenState();
+}
+
+class EnrollmentScreenState extends State<EnrollmentScreen> {
+  List enrolleddata = [
+    [
+      "Pleasonton Senior Center",
+      "Helped with entertaining the elderly and making sure  "
+    ],
+    [
+      "Pleasonton Senior Center",
+      "Helping with entertaining the elderly and making sure  "
+    ]
+  ];
+
+  TextEditingController starttimecontroller = TextEditingController();
+  TextEditingController endtimecontroller = TextEditingController();
+  TextEditingController descriptioncontroller = TextEditingController();
+
+
+  
+
+
+  void showAddHours(context1) {
+      showModalBottomSheet(
+          context: context1,
+          clipBehavior: Clip.hardEdge,
+          isDismissible: true,
+          isScrollControlled: true,
+          builder: (context) {
+            return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setter) {
+                return KeyboardAvoider(
+                  autoScroll: false,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  child: Container(
+                    color: Color(0xFF737373),
+                    child: Container(
+                      height: 450,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                      ),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.only(bottom: 150),
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Placeholder(
+                                fallbackHeight: 5,
+                                color: Colors.transparent,
+                              ),
+                              Container(
+                                height: 10,
+                                width: 50,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(30)),
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  "Add Hours",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Start Time",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                height: 80,
+                                //width: 400,
+                                padding: EdgeInsets.only(
+                                    left: 30, right: 30, bottom: 20),
+                                child: TextField(
+                                  maxLength: 20,
+                                  controller: starttimecontroller,
+                                  decoration: InputDecoration(
+                                    //labelText: "Prize",
+                                    suffixIcon: Icon(
+                                      Icons.timer,
+                                      color: Colors.green.shade300,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "End Time",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: 30, right: 30, bottom: 50),
+                                child: TextField(
+                                  controller: endtimecontroller,
+                                  decoration: InputDecoration(
+                                      //labelText: "Prize Place",
+                                      suffixIcon: Icon(
+                                        Icons.timer,
+                                        color: Colors.green.shade300,
+                                      )),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Service Description",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  left: 30,
+                                  right: 30,
+                                ),
+                                child: TextField(
+                                  controller: descriptioncontroller,
+                            
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                        Icons.description,
+                                        color: Colors.green.shade300,
+                                      )),
+                                ),
+                              ),
+                              Placeholder(
+                                fallbackHeight: 30,
+                                color: Colors.transparent,
+                              ),
+                              SizedBox(height: 50,
+                                width: 300,
+                                child: RaisedButton(
+                                  color: Colors.green.shade300,
+                                  textColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  onPressed: () {
+                          
+                                    Navigator.pop(context);
+                                  },
+
+                                  child: Text("Add Hours"),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          });
+    }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 5,
+          title: Text(
+            'Your Events',
+            style: TextStyle(color: Colors.green.shade200),
+          ),
+        ),
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 40,),
+              Center(
+                child: Container(
+                  height: 400,
+                  width: 400,
+                  child: ListView.builder(
+                      itemCount: enrolleddata.length,
+                      itemBuilder: (context, int index) {
+                        return Column(
+                          children: <Widget>[
+                            Container(
+                              height: 150,
+                              width: 370,
+
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade100,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 5
+                                  ),
+                                ]
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: 20,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      enrolleddata[index][0],
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.purple.shade400
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      enrolleddata[index][1],
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
+                                      ),
+                                    ),
+                                  ),
+                                  Container(height: 20,),
+                                  OutlineButton(
+                                    textColor: Colors.white,
+                            
+                                    child: Text("Add Hours", style: TextStyle(color: Colors.purple.shade300),),
+                                    splashColor: Colors.grey,
+                                    onPressed: () {
+                                      showAddHours(context);
+                                    },
+                                  ),
+                            
+                                ],
+                              ),
+                              )
+                            ),
+                            SizedBox(height: 30,)
+                          ],
+                        );
+                      }),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
